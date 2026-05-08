@@ -33,7 +33,7 @@ def get_bot_response(user_input, df):
             return f"I see you're looking for {best_match}, but we're currently out of stock."
 
     # 3. Handling Items Not Found
-    keywords = ["do you have", "search", "buy", "stock", ""]
+    keywords = ["do you have", "search", "buy", "stock", " "]
     if any(key in user_input for key in keywords):
         return "I'm sorry, I couldn't find that item in our inventory."
 
@@ -42,7 +42,7 @@ def get_bot_response(user_input, df):
 
 # ... (rest of your Streamlit UI code remains the same)
 # 3. Streamlit UI Setup
-st.title("Retail Assistant Bot")
+st.title("Gaurang Retail Assistant Pro v1")
 
 if "messages" not in st.session_state:
     st.session_state.messages = []
