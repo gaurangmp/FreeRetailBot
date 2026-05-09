@@ -59,7 +59,7 @@ def get_bot_response(user_input, df):
     if score >= 70:
         row = df[df['item'] == best_match].iloc[0]
         if row['stock'] > 0:
-            return f"Yes! We have **{best_match}** in stock for ${row['price']}. Current quantity: {row['stock']}."
+            return f"Yes! We have **{best_match}** in stock for ${row['price']}. There are : {row['stock']} left."
         else:
             return f"I see you're looking for {best_match}, but we're currently out of stock."
 
@@ -81,13 +81,6 @@ if "current_page" not in st.session_state:
     st.session_state.current_page = 0
 
 
-# Sidebar/Clear Button
-def clear_chat():
-    st.session_state.messages = []
-    st.session_state.current_page = 0
-
-
-st.button("Clear Chat", on_click=clear_chat)
 
 # Display chat history
 for message in st.session_state.messages:
@@ -100,6 +93,7 @@ if prompt := st.chat_input("How can I help you today?"):
     with st.chat_message("user"):
         st.markdown(prompt)
 
+
     # Generate response
     inventory_df = load_data()
     response = get_bot_response(prompt, inventory_df)
@@ -107,3 +101,12 @@ if prompt := st.chat_input("How can I help you today?"):
     with st.chat_message("assistant"):
         st.markdown(response)
     st.session_state.messages.append({"role": "assistant", "content": response})
+
+
+    # Sidebar/Clear Button
+    def clear_chat():
+        st.session_state.messages = []
+        st.session_state.current_page = 0
+
+
+    st.button("Clear Chat", on_click=clear_chat)
